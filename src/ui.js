@@ -91,11 +91,25 @@ export default class UI {
         })
 
         this.timeIcon.on('pointerover', () => {
-            this.timeIcon.setScale(this.timeIcon._baseScale * 1.1)
+            // Smoothly grow to 105% over 100ms
+            this.scene.tweens.add({
+                targets: this.timeIcon,
+                scaleX: this.timeIcon._baseScale * 1.05,
+                scaleY: this.timeIcon._baseScale * 1.05,
+                duration: 100,
+                ease: 'Quad.easeOut'
+            })
         })
 
         this.timeIcon.on('pointerout', () => {
-            this.timeIcon.setScale(this.timeIcon._baseScale)
+            // Smoothly shrink back to normal size
+            this.scene.tweens.add({
+                targets: this.timeIcon,
+                scaleX: this.timeIcon._baseScale,
+                scaleY: this.timeIcon._baseScale,
+                duration: 200,
+                ease: 'Quad.easeOut'
+            })
         })
 
         // ─── Navigation Icons (Top Right, Vertical) ────
@@ -174,12 +188,13 @@ export default class UI {
 
         this.updateSceneBackground()
 
-        const overlay = this.scene.add.rectangle(W / 2, H / 2, W, H, 0x36454F, 0.87)
+        const overlay = this.scene.add.rectangle(W / 2, H / 2, W, H, 0x0a0d10, 0.8)
             .setScrollFactor(0).setDepth(300).setInteractive()
 
         const text = this.scene.add.text(W / 2, H / 2 - 20,
-            `${GameState.getTimeIcon()} Day ${GameState.day} - ${GameState.timeOfDay}`, {
+            `${GameState.getTimeIcon()} Day ${GameState.day} - ${GameState.timeOfDay.toUpperCase()}`, {
             fontSize: '42px',
+            fontFamily: "'Share Tech Mono', monospace",
             fill: GameState.getTimeColor(),
             fontStyle: 'bold'
         }).setOrigin(0.5).setScrollFactor(0).setDepth(301).setAlpha(0)
@@ -285,34 +300,38 @@ export default class UI {
         const tIndex = GameState.timeIndex || 0
         const timeNames = ['Morning', 'Afternoon', 'Evening', 'Night']
 
-        // ─── Update time icon ──────────────────────────
+                // ─── Update time icon ──────────────────────────
         if (this.timeIcon) {
             const timeKeys = ['time-morning', 'time-noon', 'time-evening', 'time-night']
-            this.timeIcon.setTexture(timeKeys[tIndex])
+            const targetKey = timeKeys[tIndex]
 
-            const timeIconW = 300
-            const newScale = timeIconW / this.timeIcon.width
-            this.timeIcon.setScale(newScale)
-            this.timeIcon._baseScale = newScale
+            if (this.timeIcon.texture.key !== targetKey) {
+                this.timeIcon.setTexture(targetKey)
 
-            this.scene.tweens.add({
-                targets: this.timeIcon,
-                scaleX: newScale * 1.2,
-                scaleY: newScale * 1.2,
-                duration: 150,
-                yoyo: true,
-                ease: 'Back.easeOut'
-            })
+                const timeIconW = 300
+                const newScale = timeIconW / this.timeIcon.width
+                this.timeIcon.setScale(newScale)
+                this.timeIcon._baseScale = newScale
+
+                this.scene.tweens.add({
+                    targets: this.timeIcon,
+                    scaleX: newScale * 1.2,
+                    scaleY: newScale * 1.2,
+                    duration: 150,
+                    yoyo: true,
+                    ease: 'Back.easeOut'
+                })
+            }
+
         }
-
         // ─── Update day pill text ──────────────────────
         if (this.dayPillText && this.dayPillTab) {
             const newTimeName = timeNames[tIndex] || 'Time'
-            this.dayPillText.setText(`Day ${GameState.day} - ${newTimeName}`)
+            this.dayPillText.setText(`Day ${GameState.day} - ${newTimeName.toUpperCase()}`)
             this.dayPillTab.setSize(this.dayPillText.width + 20, 20)
             this.scene.tweens.add({
                 targets: [this.dayPillTab, this.dayPillText],
-                scaleY: 1.2,
+                scaleY: 1.1,
                 duration: 100,
                 yoyo: true,
                 ease: 'Quad.easeInOut'
@@ -726,7 +745,7 @@ export default class UI {
 
             // LEFT COLUMN (Titles)
             titleStartY: pH * 0.35 - 10,  // Where the first title starts
-            titleSpacing: pH * 0.12 +20, // Gap between titles
+            titleSpacing: pH * 0.12 + 20, // Gap between titles
             titleCenterX: pW * 0.25, // Horizontal center of titles
             titleFontSize: 32,       // Size of title text
 
@@ -739,12 +758,12 @@ export default class UI {
             storyY: pH * 0.32 + 32,       // Y of the 3-line story phrase
             storyFontSize: 22,       // Size of story text
 
-            tasksStartY: pH * 0.48 +70,  // Where the task list begins
+            tasksStartY: pH * 0.48 + 70,  // Where the task list begins
             taskSpacing: 30,         // Gap between tasks
             taskFontSize: 22,        // Size of task text
 
             // FOOTER
-            footerY: pH * 0.92 +10,      // Y of "2 QUESTS AVAILABLE"
+            footerY: pH * 0.92 + 10,      // Y of "2 QUESTS AVAILABLE"
             footerFontSize: 28       // Size of footer
         };
 
@@ -782,21 +801,21 @@ export default class UI {
         this.refreshQuestList();
     }
 
-        createTab(x, y, tabKey, label, fontSize) {
+    createTab(x, y, tabKey, label, fontSize) {
         const isSelected = this.selectedTab === tabKey;
-        
+
         const tab = this.scene.add.text(x, y, label, {
             fontFamily: "'Gloria Hallelujah', cursive",
             fontSize: `${fontSize}px`,
             fill: isSelected ? '#000000' : '#665544',
             fontStyle: 'bold'
         }).setOrigin(0.5).setDepth(63).setScrollFactor(0);
-        
+
         this.taskItems.push(tab);
 
 
         if (this._questLayout && !this._questLayout.tabsVisible) {
-            tab.setAlpha(0); 
+            tab.setAlpha(0);
         } else {
 
             tab.setInteractive({ useHandCursor: true });
@@ -805,10 +824,10 @@ export default class UI {
                 this.selectedQuest = null;
                 this.refreshQuestList();
             });
-            return; 
+            return;
         }
 
-        const hitW = this._questLayout.tabHitW || 100; 
+        const hitW = this._questLayout.tabHitW || 100;
         const hitH = this._questLayout.tabHitH || 30;
 
         const hitbox = this.scene.add.rectangle(x, y, hitW, hitH, 0x000000, 0)
