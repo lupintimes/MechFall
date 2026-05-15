@@ -14,7 +14,6 @@ const GameState = {
         }
         const times = ['morning', 'afternoon', 'evening', 'night']
         this.timeOfDay = times[this.timeIndex]
-        console.log(`📅 Day ${this.day} - ${this.timeOfDay}`)
         return this.isGameOver()
     },
 
@@ -22,7 +21,6 @@ const GameState = {
         this.timeIndex = 0
         this.timeOfDay = 'morning'
         this.day++
-        console.log(`😴 Slept. Day ${this.day} - morning`)
         return this.isGameOver()
     },
 
@@ -107,7 +105,6 @@ const GameState = {
                 quantity: item.quantity || 1
             })
         }
-        console.log(`🎒 Item added: ${item.name}`, this.inventory)
     },
 
     removeItem(id, quantity = 1) {
@@ -212,7 +209,6 @@ const GameState = {
     // ─── Flag Methods ──────────────────────────────────
     setFlag(flag, value = true) {
         this.flags[flag] = value
-        console.log(`🚩 Flag set: ${flag} =`, value)
         this.tryAdvanceLevel()
     },
 
@@ -223,16 +219,13 @@ const GameState = {
     // ─── Money Methods ─────────────────────────────────
     earnMoney(amount) {
         this.money += amount
-        console.log(`💰 Earned ${amount}. Total: ${this.money}`)
     },
 
     spendMoney(amount) {
         if (this.money >= amount) {
             this.money -= amount
-            console.log(`💸 Spent ${amount}. Remaining: ${this.money}`)
             return true
         }
-        console.log(`❌ Not enough money. Need ${amount}, have ${this.money}`)
         return false
     },
 
@@ -257,13 +250,11 @@ const GameState = {
     addArmorPart(part) {
         if (!this.armor.parts.includes(part)) {
             this.armor.parts.push(part)
-            console.log(`🛡️ Armor part added: ${part}`, this.armor.parts)
         }
     },
 
     advanceLevel() {
         this.level++
-        console.log(`⭐ Level up! Now level ${this.level}`)
     },
 
     // ─── Level Completion Checks ───────────────────────
@@ -296,19 +287,16 @@ const GameState = {
 
         if (this.level === 1 && this.isLevel1Complete()) {
             this.level = 2
-            console.log('⭐ Level up! Now level 2')
             advanced = true
         }
 
         if (this.level === 2 && this.isLevel2ReadyToAdvance()) {
             this.level = 3
-            console.log('⭐ Level up! Now level 3')
             advanced = true
         }
 
         if (this.level === 3 && this.isLevel3ReadyToAdvance()) {
             this.level = 4
-            console.log('⭐ Level up! Now level 4')
             advanced = true
         }
 

@@ -388,7 +388,7 @@ export default class WorkshopScene extends Phaser.Scene {
         if (GameState.skills.research >= 30 &&
             !GameState.getFlag('researchClueFound')) {
             GameState.setFlag('researchClueFound')
-            console.log('🔬 Research clue unlocked!')
+            
         }
 
         const allClues =
@@ -400,7 +400,7 @@ export default class WorkshopScene extends Phaser.Scene {
         if (!allClues) return
 
         this.truthTriggered = true
-        console.log('🎬 All clues found! Starting cutscene...')
+        
 
         GameState.setFlag('learnedTruth')
         GameState.tryAdvanceLevel()

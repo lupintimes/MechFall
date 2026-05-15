@@ -185,7 +185,6 @@ export default class EnemyScene extends Phaser.Scene {
                 const marker = this.add.circle(wx, wy, 8, color, 0.7).setDepth(999)
                 const label = this.add.text(wx, wy - 14, labels[this.positionTool.mode], { fontSize: '10px', fill: '#fff' }).setOrigin(0.5).setDepth(999)
                 this.positionTool.markers.push(marker, label)
-                console.log(`[PosTool] ${this.positionTool.mode} placed at (${wx}, ${wy})`)
                 return
             }
             if (pointer.rightButtonDown()) {
@@ -493,22 +492,13 @@ export default class EnemyScene extends Phaser.Scene {
     // ═══════════════════════════════════════════════════
     update() {
 
-        // ─── Print player position ─────────────────────
-        if (Phaser.Input.Keyboard.JustDown(this.pKey)) {
-            console.log(`Player: x: ${Math.round(this.player.x)}, y: ${Math.round(this.player.y)}`)
-        }
-
-        // ─── Position Tool ─────────────────────────────
-
         // ─── Position Tool ─────────────────────────────
         if (Phaser.Input.Keyboard.JustDown(this.yKey)) {
             this.positionTool.enabled = !this.positionTool.enabled
             this.posToolLabel.setVisible(this.positionTool.enabled)
             if (this.positionTool.enabled) {
                 this.posToolLabel.setText(`[PosTool] Mode: ${this.positionTool.mode}`)
-                console.log('[PosTool] ENABLED — mode:', this.positionTool.mode)
-            } else {
-                console.log('[PosTool] DISABLED')
+            
             }
         }
         if (this.positionTool.enabled) {
@@ -516,9 +506,7 @@ export default class EnemyScene extends Phaser.Scene {
             if (Phaser.Input.Keyboard.JustDown(this.twoKey)) { this.positionTool.mode = 'exit'; this.posToolLabel.setText('[PosTool] Mode: exit') }
             if (Phaser.Input.Keyboard.JustDown(this.threeKey)) { this.positionTool.mode = 'ladder'; this.posToolLabel.setText('[PosTool] Mode: ladder') }
             if (Phaser.Input.Keyboard.JustDown(this.oKey)) {
-                console.log('──── Placed positions ────')
-                this.positionTool.placed.forEach(p => console.log(`  ${p.mode}: (${p.x}, ${p.y})`))
-                console.log('──────────────────────────')
+                //this.positionTool.placed.forEach(p => console.log(`  ${p.mode}: (${p.x}, ${p.y})`))
             }
         }
 
