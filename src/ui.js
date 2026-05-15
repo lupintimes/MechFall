@@ -716,11 +716,11 @@ export default class UI {
         this.selectedTab = this.selectedTab || 'active';
 
         const overlay = this.scene.add.rectangle(W / 2, H / 2, W, H, 0x000000, 0.7)
-            .setDepth(60).setScrollFactor(0).setInteractive();
+            .setDepth(510).setScrollFactor(0).setInteractive();
         this.taskItems.push(overlay);
 
         const bg = this.scene.add.image(W / 2, H / 2, 'quest-bg')
-            .setDepth(61).setScrollFactor(0).setScale(0.85);
+            .setDepth(511).setScrollFactor(0).setScale(0.85);
         this.taskItems.push(bg);
 
         const pW = bg.displayWidth;
@@ -772,7 +772,7 @@ export default class UI {
 
         // Close Button
         const closeBtn = this.scene.add.rectangle(pX + layout.closeBtnX, pY + layout.closeBtnY, 60, 60, 0xff0000, 0)
-            .setScale(1.3).setDepth(62).setScrollFactor(0).setInteractive({ useHandCursor: true })
+            .setScale(1.3).setDepth(512).setScrollFactor(0).setInteractive({ useHandCursor: true })
             .on('pointerdown', () => this.hideTaskPanel());
         this.taskItems.push(closeBtn);
 
@@ -809,7 +809,7 @@ export default class UI {
             fontSize: `${fontSize}px`,
             fill: isSelected ? '#000000' : '#665544',
             fontStyle: 'bold'
-        }).setOrigin(0.5).setDepth(63).setScrollFactor(0);
+        }).setOrigin(0.5).setDepth(513).setScrollFactor(0);
 
         this.taskItems.push(tab);
 
@@ -832,7 +832,7 @@ export default class UI {
 
         const hitbox = this.scene.add.rectangle(x, y, hitW, hitH, 0x000000, 0)
             .setOrigin(0.5)
-            .setDepth(64) // Put it slightly above the text depth
+            .setDepth(514) // Put it slightly above the text depth
             .setScrollFactor(0)
             .setInteractive({ useHandCursor: true });
 
@@ -882,7 +882,7 @@ export default class UI {
                 fill: isSelected ? '#000000' : '#665544',
                 fontStyle: isSelected ? 'bold' : 'normal',
                 align: 'center'
-            }).setOrigin(0.5).setDepth(63).setScrollFactor(0).setInteractive({ useHandCursor: true });
+            }).setOrigin(0.5).setDepth(513).setScrollFactor(0).setInteractive({ useHandCursor: true });
 
             titleText.on('pointerdown', () => {
                 this.selectedGroupIndex = index;
@@ -904,7 +904,7 @@ export default class UI {
             fontSize: `${L.headerFontSize}px`,
             fill: '#ffffff',
             fontStyle: 'bold'
-        }).setOrigin(0.5).setDepth(63).setScrollFactor(0);
+        }).setOrigin(0.5).setDepth(513).setScrollFactor(0);
         this.detailTexts.push(headerText);
 
         // 2. Story Phrase
@@ -916,7 +916,7 @@ export default class UI {
             fontStyle: 'italic',
             align: 'center',
             lineSpacing: 4
-        }).setOrigin(0.5, 0).setDepth(63).setScrollFactor(0);
+        }).setOrigin(0.5, 0).setDepth(513).setScrollFactor(0);
         this.detailTexts.push(storyText);
 
         // 3. Tasks
@@ -926,7 +926,7 @@ export default class UI {
         if (tasksToShow.length === 0) {
             const emptyMsg = this.scene.add.text(rightX, currentTaskY, 'No tasks here...', {
                 fontFamily: "'Gloria Hallelujah', cursive", fontSize: '16px', fill: '#8B7355', fontStyle: 'italic'
-            }).setOrigin(0.5).setDepth(63).setScrollFactor(0);
+            }).setOrigin(0.5).setDepth(513).setScrollFactor(0);
             this.detailTexts.push(emptyMsg);
         } else {
             tasksToShow.forEach((task, i) => {
@@ -934,7 +934,7 @@ export default class UI {
                 const taskText = this.scene.add.text(rightX, currentTaskY, `${icon} ${task.text}`, {
                     fontFamily: "'Gloria Hallelujah', cursive", fontSize: `${L.taskFontSize}px`, fill: '#443322',
                     wordWrap: { width: L.pW * 0.35 }, align: 'center'
-                }).setOrigin(0.5, 0).setDepth(63).setScrollFactor(0).setInteractive({ useHandCursor: true });
+                }).setOrigin(0.5, 0).setDepth(513).setScrollFactor(0).setInteractive({ useHandCursor: true });
 
                 taskText.on('pointerdown', () => { this.selectedTaskIndex = i; this.refreshQuestList(); });
                 taskText.on('pointerover', () => taskText.setFill('#8B1A1A'));
@@ -947,7 +947,7 @@ export default class UI {
                     const hintText = this.scene.add.text(rightX, currentTaskY, `💡 ${task.hint}`, {
                         fontFamily: "'Gloria Hallelujah', cursive", fontSize: '13px', fill: '#8B7355',
                         fontStyle: 'italic', wordWrap: { width: L.pW * 0.3 }, align: 'center'
-                    }).setOrigin(0.5, 0).setDepth(63).setScrollFactor(0);
+                    }).setOrigin(0.5, 0).setDepth(513).setScrollFactor(0);
                     this.detailTexts.push(hintText);
                     currentTaskY += 25;
                 }
@@ -961,7 +961,7 @@ export default class UI {
             fontSize: `${L.footerFontSize}px`,
             fill: '#000000',
             fontStyle: 'bold'
-        }).setOrigin(0.5).setDepth(64).setScrollFactor(0);
+        }).setOrigin(0.5).setDepth(514).setScrollFactor(0);
         this.detailTexts.push(counterText);
     }
 
