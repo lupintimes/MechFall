@@ -75,14 +75,14 @@ const GameState = {
 
     // ─── Core Stats ────────────────────────────────────
     level: 1,
-    money: 4000,
-    reputation: 400,
-    elixir: 100,
+    money: 250,
+    reputation: 10,
+    elixir: 10,
 
     skills: {
-        repair: 100,
-        research: 100,
-        combat: 100
+        repair: 5,
+        research: 0,
+        combat: 0
     },
 
     armor: {
