@@ -13,7 +13,7 @@ export default class PreloadScene extends Phaser.Scene {
         this.add.rectangle(W / 2, H / 2, W, H, 0x0a0a12)
 
         // ─── Title ─────────────────────────────────────
-        this.add.text(W / 2, H / 2 - 100, '🤖 MACHINE GAME', {
+        this.add.text(W / 2, H / 2 - 100, '🤖 MECHFALL: CITY OF RUINS', {
             fontFamily: "'Orbitron', monospace",
             fontSize: '48px',
             fill: '#00ff88',
